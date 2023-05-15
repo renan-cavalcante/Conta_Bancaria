@@ -73,8 +73,8 @@ public class BancoDados {
 			String linha = io.readLine();
 			while (linha != null && !linha.isEmpty()) {
 				String[] conteudo = linha.split(",");
-				Conta conta = new Conta(Integer.parseInt(conteudo[0]), conteudo[1], Double.parseDouble(conteudo[2]),
-						Double.parseDouble(conteudo[3]), Integer.parseInt(conteudo[4]));
+				Conta conta = new Conta(Integer.parseInt(conteudo[0]), conteudo[1], Double.parseDouble(conteudo[2]), Integer.parseInt(conteudo[3]),
+						Double.parseDouble(conteudo[4]));
 				contas.add(conta);
 				linha = io.readLine();
 			}

@@ -10,10 +10,9 @@ public class MovimentosServe{
 	private static BancoDados io = new BancoDados();
 	private static ContaServe contaServe = new ContaServe();
 
-	public void cadastraMovimento() {
+	public void cadastraMovimento(int tipoMovimento) {
 		Integer codigoConta = null;
 		Double valorMovimento;
-		Integer tipoMovimento;
 		Integer status;
 
 		Boolean contaCadastrada = true;
@@ -32,13 +31,11 @@ public class MovimentosServe{
 		System.out.printf("%nDigite o valor do movimento:");
 		valorMovimento = ler.nextDouble();
 		
-		System.out.printf("%nDigite 1 para credito e 2 para debito");
-		tipoMovimento = ler.nextInt();
-		
 		System.out.printf("%nDigite o status");
 		status = ler.nextInt();
 		
 		MovimentoConta movimento = new MovimentoConta(codigoConta, valorMovimento, tipoMovimento, status);
-		io.gravarDados("movimentos.csv", movimento.toStringCSV());
+		io.gravarDados("movimentosRegistrados.csv", movimento.toStringCSV());
+		contaServe.movimentarConta(movimento);
 	}
 }

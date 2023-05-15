@@ -19,15 +19,17 @@ public class Conta {
 	private Integer codigoConta;
 	private String nomeCliente;
 	private Double saldoConta = 0.0;
-	private Double limiteConta;
+	private Double limiteSaldo;
+	private Double limiteDefinido;
 	private Integer tipoConta;
-	
-	public Conta(Integer codigoConta, String nomeCliente, Double saldoConta, Double limiteConta, Integer tipoCota) {
+
+	public Conta(Integer codigoConta, String nomeCliente, Double saldoConta, Integer tipoConta, Double limiteDefinido) {
 		this.codigoConta = codigoConta;
 		this.nomeCliente = nomeCliente;
 		deposito(saldoConta);
-		this.limiteConta = limiteConta;
-		this.tipoConta = tipoCota;
+		this.limiteDefinido = limiteDefinido;
+		this.limiteSaldo = limiteDaConta(tipoConta, limiteDefinido, saldoConta);
+		this.tipoConta = tipoConta;
 	}
 
 	public Integer getCodigoConta() {
@@ -51,7 +53,7 @@ public class Conta {
 	}
 
 	public Double getLimiteConta() {
-		return limiteConta;
+		return limiteSaldo;
 	}
 
 	public Integer getTipoCota() {
@@ -61,19 +63,51 @@ public class Conta {
 	public void setTipoCota(Integer tipoCota) {
 		this.tipoConta = tipoCota;
 	}
-	
-	public String toStringCSV() {
-		return codigoConta+","+nomeCliente+","+saldoConta+","+limiteConta+","+tipoConta;
+
+	public Double getLimiteDefinido() {
+		return limiteDefinido;
 	}
-	
+
+	public void setLimiteDefinido(Double limiteDefinido) {
+		this.limiteDefinido = limiteDefinido;
+	}
+
+	public String toStringCSV() {
+		return codigoConta + "," + nomeCliente + "," + saldoConta + "," + limiteSaldo + "," + tipoConta;
+	}
+
 	public void deposito(Double valor) {
 		this.saldoConta += valor;
 	}
-	
+
 	public void saque(Double valor) {
 		this.saldoConta -= valor;
 	}
+
+	public Double limiteDaConta(int tipo, Double limite, Double saldo) {
+		switch (tipo) {
+		case 1:
+			return 0.0;
+			
+		case 2:
+			return limite;
+
+		case 3:
+			return limite + (saldo * 0.5);
+
+		case 4:
+			return limite + saldo;
+
+		default:
+			throw new IllegalArgumentException("Unexpected value em metodo limiteDaConta: " + tipo);
+		}
+		
+		
+	}
 	
+	public void usarLimite(Double valor) {
+		this.limiteSaldo -= valor;
+	}
 	
-	
+
 }
